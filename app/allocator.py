@@ -83,15 +83,15 @@ class Allocator(object):
     @staticmethod
     def print_room(params):
         room = session.query(Room).filter(Room.name.ilike(params['<room_name>'][0])).first()
-        if room:
-            if room.has_occupants():
-                print "ROOM OCCUPANTS\n{}".format("="*20)
-                for person in room.room_occupants:
-                    print person.name
-            else:
-                print "Room has no occupants"
-        else:
+        if not room:
             print "Room does not exist"
+            return
+        if not room.has_occupants():
+            print "Room has no occupants"
+            return
+        print "ROOM OCCUPANTS\n{}".format("="*20)
+        for person in room.room_occupants:
+            print person.name
 
     @staticmethod
     def print_allocations(params):
@@ -108,7 +108,6 @@ class Allocator(object):
         output.close()
 
     @staticmethod
-
     def reallocate_person(params):
         """
         allocator.py reallocate_person <person_identifier> <new_room_name>
@@ -145,7 +144,6 @@ def main(params):
             method = getattr(allocator, key)
             method(params)
             break
-
 
 if __name__ == "__main__":
     arguments = docopt(__doc__, version='Allocator 1.0', options_first=False)

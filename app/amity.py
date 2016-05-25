@@ -1,7 +1,9 @@
 import random
 import sys
+import os
 
-sys.path.insert(0, '/Users/bendozy/Code/AndelaRoomAllocatorOld/')
+sys.path.insert(0, os.path.realpath('..'))
+
 from rooms.office import Office
 from rooms.room import Room
 from rooms.livingspace import LivingSpace
